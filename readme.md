@@ -24,4 +24,6 @@
 >
 >  shutil：Python自带，无需安装。
 >  
+>  ezexif：第三方库，打开cmd（或其它操作系统的终端），使用pip install ezexif进行安装。
+>  
 > ......（待补充）
