@@ -1,5 +1,6 @@
 import os
-searchPath = "./resources/"
+
+searchPath = "./resources/ex1_1"
 searchFileName = "杜子鄂实习合同.docx"
 allItems = os.listdir(searchPath)
 fileExists = False  # 表示是否存在
@@ -13,3 +14,4 @@ if fileExists:
     print("文件找到")
 else:
     print("文件未找到")
+
