@@ -4,7 +4,6 @@ import openpyxl
 # 文档的路径
 import rmbTrans
 from openpyxl.utils import cell
-from openpyxl.worksheet import worksheet
 from openpyxl.worksheet.worksheet import Worksheet
 
 productFile = "./resources/ex3_5/开口哭牌供货列表.xlsx"
