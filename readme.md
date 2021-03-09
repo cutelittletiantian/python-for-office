@@ -24,13 +24,13 @@
 >
 >  shutil：Python自带，无需安装。
 >
->  ezexif：第三方库，打开cmd（或其它操作系统的终端），使用pip install ezexif进行安装。用途：处理读取一些照片文件的信息等。
+>  ezexif：第三方库，打开cmd（或其它操作系统的终端），使用``pip install ezexif``进行安装。用途：处理读取一些照片文件的信息等。
 >
->  openpyxl：第三方库，打开cmd（或其它操作系统的终端），使用pip install openpyxl进行安装。用途：对excel表格进行读写操作。
+>  openpyxl：第三方库，打开cmd（或其它操作系统的终端），使用``pip install openpyxl``进行安装。用途：对excel表格进行读写操作。
 >
->  rmbTrans：第三方库，打开cmd（或其它操作系统的终端），使用pip install rmbTrans进行安装。用途：将中文大写的人民币值（例如：``肆仟贰佰壹拾贰元伍角伍分``经过转换变成数值的4212.55，单位：元）。
+>  rmbTrans：第三方库，打开cmd（或其它操作系统的终端），使用``pip install rmbTrans``进行安装。用途：将中文大写的人民币值（例如：``肆仟贰佰壹拾贰元伍角伍分``经过转换变成数值的``4212.55``，单位：元）。
 >
->  python-docx：第三方库，打开cmd（或其它操作系统的终端），使用pip install python-docx进行安装。**注意：这个库在导入时使用``import docx``，而不是导入全名。**用途：对word文档进行读写操作。
+>  python-docx：第三方库，打开cmd（或其它操作系统的终端），使用``pip install python-docx``进行安装。注意：这个库在导入时使用``import docx``，而不是导入全名。用途：对word文档进行读写操作。
 >
 >  ......（待补充）
 
