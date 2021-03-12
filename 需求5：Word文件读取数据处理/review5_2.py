@@ -1,7 +1,7 @@
 import os
 import shutil
 
-regPath = "./resources/review2/registration"
+regPath = "./resources/review5_2/registration"
 
 allForms = os.listdir(path=regPath)
 print(allForms)

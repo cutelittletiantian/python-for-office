@@ -1,8 +1,8 @@
 import os
 import shutil
 
-regPath = "./resources/review1/registration"
-targetPath = "./resources/review1/不合格"
+regPath = "./resources/review5_1/registration"
+targetPath = "./resources/review5_1/不合格"
 
 # 可竞选科目
 subjects = ["语文", "数学", "英语", "体育", "音乐", "安全教育", "美术"]

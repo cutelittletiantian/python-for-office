@@ -16,7 +16,7 @@ studentName = [
     '杨少帆', '谢福顺', '刘军', '李多钰'
 ]
 
-allFormsPath = "./resources/review3/回执/"
+allFormsPath = "./resources/review5_3/回执/"
 
 # 找出提交名单
 submitStudent = []
