@@ -176,6 +176,6 @@ from email.header import Header
 
 >  https://python-docx.readthedocs.io/en/latest/
 
-``pdfplumber``第三方库开源代码
+``pdfplumber``第三方库开源代码及文档
 
 > https://github.com/jsvine/pdfplumber
