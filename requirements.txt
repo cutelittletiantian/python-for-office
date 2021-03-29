@@ -1,5 +1,6 @@
 ezexif==0.0.5
 openpyxl==3.0.7
 pdfplumber==0.5.27
+Pillow==8.1.2
 python-docx==0.8.10
 rmbTrans==0.1.0
