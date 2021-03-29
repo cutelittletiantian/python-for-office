@@ -47,7 +47,7 @@ for articleItem in articleList:
     # 当前信息添加到wordInfo中
     wordInfo.append(articleInfo)
 
-print(wordInfo)
+# print(wordInfo)
 
 # 扫描所有汇总表
 excelInfo = dict()
@@ -65,7 +65,7 @@ for sheetName in summaryBook.sheetnames:
 # 关闭汇总表，节省资源
 summaryBook.close()
 
-print(excelInfo)
+# print(excelInfo)
 
 
 # 匹配文档，按格式改名
