@@ -75,6 +75,8 @@ for articleInfo in wordInfo:
         if articleInfo in content:
             # 匹配到，执行改名
             name = articleInfo[1]  # 姓名
+            # 按照格式重命名文件，将修改后的文件拷贝到dst所在目录下
+            # 重命名+拷贝：copy，取什么名字，dst下面的文件就重命名成什么样
             shutil.copy(src=os.path.join(articlePath, f"{name}投稿.docx"),
                         dst=os.path.join(modifyPath, f"2020年{month}{name}投稿.docx")
                         )
