@@ -3,8 +3,9 @@ import docx
 from docx.document import Document
 from docx.text.paragraph import Paragraph
 
-sourcePath = "/Users/yequ/Desktop/Translation/book.pdf"
-targetPath = "/Users/yequ/Desktop/book.docx"
+# 注意：book.pdf暂时还没找文本素材，这个地方大家自己随便编点东西，做个pdf文档然后尝试吧
+sourcePath = "./resources/ex7_6/book.pdf"
+targetPath = "./resources/ex7_6/book.docx"
 
 # 启动pdf文档
 sourceFile = pdfplumber.open(path_or_fp=sourcePath)
