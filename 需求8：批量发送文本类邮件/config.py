@@ -7,7 +7,7 @@ from openpyxl.worksheet.worksheet import Worksheet
 sender_info = {
     "nickname": "指定自己发送邮件的发件人名",
     "email": "请在此填写补全自己发送端的邮箱",
-    "password": "请申请到授权码，并填写于此"
+    "password": "申请到授权码，并填写于此"
 }
 
 # 存储邮箱联系方式的资源路径
