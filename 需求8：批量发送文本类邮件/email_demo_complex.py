@@ -79,7 +79,7 @@ for receiver in contactList:
         # Step 1: 构造图片数据流（图片是二进制文件，这种方式可以把图片以二进制数据形式加载进来）
         attachFileOne = open(file="resources/attach/演示附件1.docx", mode="rb").read()
         # Step 2: 创建附件MIME对象
-        attachContentOne = MIMEApplication(_data=attachFileOne, _subtype="base64", _charset="utf-8")
+        attachContentOne = MIMEApplication(_data=attachFileOne, _subtype="octet-stream", _charset="base64")
         attachContentOne.add_header(_name="Content-Type", _value="application/msword")
         attachContentOne.add_header(
             _name="Content-Disposition",
@@ -92,7 +92,7 @@ for receiver in contactList:
         # 5. 往邮件中添加附件2
         # 类似的，模仿一下？
         attachFileTwo = open(file="resources/attach/演示附件2.pptx", mode="rb").read()
-        attachContentTwo = MIMEApplication(_data=attachFileTwo, _subtype="base64", _charset="utf-8")
+        attachContentTwo = MIMEApplication(_data=attachFileTwo, _subtype="octet-stream", _charset="base64")
         attachContentTwo.add_header(_name="Content-Type", _value="application/vnd.ms-powerpoint")
         attachContentTwo.add_header(
             _name="Content-Disposition",
