@@ -198,7 +198,7 @@ Content-Disposition: attachment; filename="filename.jpg"  # 下载展示，同�
 
 下面这张图，非常清晰地表达了MIME协议和SMTP协议的关系。（图片摘自：谢希仁《计算机网络（第7版）》第292页，图6-18）
 
-<img src="http://yfs01.fs.yiban.cn/index.php?a=getFile&userid=18455288&path=%E6%88%91%E7%9A%84%E5%9B%BE%E7%89%87%2FSMTP%E5%92%8CMIME%E5%8D%8F%E8%AE%AE%2F01SMTP%E5%92%8CMIME%E5%8D%8F%E8%AE%AE%E5%85%B3%E7%B3%BB.png&uid=18455288&time=1621817464&sign=db9fbe12f8407badf86308873e2c4916" alt="图：MIME和SMTP的关系描述图（摘自谢希仁《计算机网络（第7版）》）" style="zoom: 150%" />
+<img src="https://i.loli.net/2021/05/24/DMk8pBNPnCXFSVK.png" alt="MIME协议和SMTP协议的关系，摘自谢希仁《计算机网络（第7版）》—第6章 应用层—图6.18" style="zoom:150%;" />
 
 MIME协议没有取代或者更改SMTP协议，只是在SMTP协议的基础上进行了扩充，所以SMTP可识别的字段在MIME协议下也是可识别的。
 
