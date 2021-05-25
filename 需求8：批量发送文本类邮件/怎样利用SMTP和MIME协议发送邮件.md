@@ -198,7 +198,7 @@ Content-Disposition: attachment; filename="filename.jpg"  # 下载展示，同�
 
 下面这张图，非常清晰地表达了MIME协议和SMTP协议的关系。（图片摘自：谢希仁《计算机网络（第7版）》第292页，图6-18）
 
-<img src="https://bl3302files.storage.live.com/y4mOUfTrojFFbgd2hGUBichoXnU0ga0MonXW9yTde5DO_bc-dfst705HZoNGDOMVhrUmrZDVFtqBGw95COQrckTuq_K2VC6dEihOu0Ah7SV-Df8RB-pF50PKQJFtqulwk-Vz8xsZx9G488c93kSmv-JnKvXOlC4wrUbkIpitVQqR1o0R1wW314RBGhMfBELB3_G?width=364&height=213&cropmode=none" width="364" height="213" />
+<img src="https://bl3302files.storage.live.com/y4mOUfTrojFFbgd2hGUBichoXnU0ga0MonXW9yTde5DO_bc-dfst705HZoNGDOMVhrUmrZDVFtqBGw95COQrckTuq_K2VC6dEihOu0Ah7SV-Df8RB-pF50PKQJFtqulwk-Vz8xsZx9G488c93kSmv-JnKvXOlC4wrUbkIpitVQqR1o0R1wW314RBGhMfBELB3_G?width=364&height=213&cropmode=none" width="364" height="213" alt="图：MIME和SMTP的关系（摘自：谢希仁《计算机网络（第7版）》第292页，图6-18）" />
 
 MIME协议没有取代或者更改SMTP协议，只是在SMTP协议的基础上进行了扩充，所以SMTP可识别的字段在MIME协议下也是可识别的。
 
