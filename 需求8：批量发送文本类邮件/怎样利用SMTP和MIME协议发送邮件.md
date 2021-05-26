@@ -409,6 +409,8 @@ multiMsg.attach(payload=txtMsg)
 
 3. 将子报文添加到multipart容器报文中
 
+> html文本数据报文，往往是用于引用一些外部资源，参考2.4部分
+
 
 
 **以下是一种Python实现方式（可结合第3部分程序演示案例加深印象）**
@@ -479,48 +481,36 @@ multiMsg.attach(payload=txtMsg)
   * OneDrive云（微软），啥外链都适合生成
   * 适合用于图片外链生成的“图床”：[Image Upload - SM.MS - Simple Free Image Hosting](https://sm.ms/)
 
-引用外链时，要适当考虑外链服务器的稳定性，否则外部资源可能会时而能显示，时而又不能显示。
+**引用外链时，要适当考虑外链服务器的稳定性，否则外部资源可能会时而能显示，时而又不能显示。**
 
 
 
 **以下是一种Python实现方式（可结合第3部分程序演示案例加深印象）**
 
-这里引用的外部资源，是Bilibili番剧《魔卡少女樱CLEAR CARD篇》第1集：[魔卡少女樱 CLEAR CARD篇：第1话_番剧_bilibili_哔哩哔哩](https://www.bilibili.com/bangumi/play/ep172119)
+这里引用的外部资源，是武汉理工大学南湖图书馆的照片，如下图所示。
 
-但是这个视频链接不是直接调用的，我们要调用的是播放器：https://player.bilibili.com/player.html?cid=30182390&aid=18051129&bvid=BV1UW411B74C&page=1
-
-效果如下面展示（审查元素可以查看一下它的html标签为iframe）：
-
-<iframe src="https://player.bilibili.com/player.html?cid=30182390&aid=18051129&bvid=BV1UW411B74C&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" width="100%" height=500>当前区域不支持iframe标签</iframe>
+<img src="https://bl3302files.storage.live.com/y4mTM2sZADmrTf1IXMUhdAOShJoHNduCqoGVp1Sek2DY2M9DoOlXQuucmFATpcjjfuDgyEgMK1dqmwflD6c9Cip7BSHHvL3THe5ZTTQjhi8bPjpQDPKe-xeO9vbhqrzzQ1erS_pvopTF5ZJnGnRLijaDjJiRsXZYcuYZswbTQJAHyzTTGHkecplIm5P9Bx2zV-f?width=660&height=440&cropmode=none " width="660" height="440" />
 
 ```python
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-# 准备MIME容器报文
-multiMsg = MIMEMultipart()
-
-# 1. 准备视频外链
-vidUrl = "https://player.bilibili.com/player.html?cid=30182390&aid=18051129&bvid=BV1UW411B74C&page=1"
-# 2. 准备html文本，写入外链
-externalLink = '''<iframe
-src="https://player.bilibili.com/player.html?cid=30182390&aid=18051129&bvid=BV1UW411B74C&page=1"
-scrolling="no"
-border="0"
-frameborder="no"
-framespacing="0"
-allowfullscreen="true"
-width="100%"
-height=500></iframe>'''
+# 1. 准备图片外链
+externalLink = "https://bl3302files.storage.live.com/y4mTM2sZADmrTf1IXMUhdAOShJoHNduCqoGVp1Sek2DY2M9DoOlXQuucmFATpcjjfuDgyEgMK1dqmwflD6c9Cip7BSHHvL3THe5ZTTQjhi8bPjpQDPKe-xeO9vbhqrzzQ1erS_pvopTF5ZJnGnRLijaDjJiRsXZYcuYZswbTQJAHyzTTGHkecplIm5P9Bx2zV-f?width=660&height=440&cropmode=none "
+# 2. 准备html文本，加入外链
+htmlText = f"""<p><img src={externalLink} width="660" height="440" /></p> """
+# print(htmlData)
 
 # 3. 创建html文本子报文
 # _text: 添加准备好的数据
 # _subtype: 指定MIME类型子类为html。父类已经为text了，这是由MIMEText默认设置好的
 # _charset: 指定文本以什么编码字符集显示，通常设为utf-8，否则可能乱码
-txtMsg = MIMEText(_text=externalLink, _subtype="html", _charset="utf-8")
+txtMsg = MIMEText(_text=htmlText, _subtype="html", _charset="utf-8")
 # 4. 文本子报文加入容器报文
 multiMsg.attach(payload=txtMsg)
 ```
+
+> 
 
 ***
 
@@ -689,7 +679,7 @@ multiMsg.attach(payload=unknownMsg)
 
 ***
 
-
+#### 
 
 ***
 
@@ -757,6 +747,3 @@ multiMsg.attach(payload=unknownMsg)
 
 * [Free stock videos · Pexels Videos](https://www.pexels.com/videos/)
 
-* [iframe嵌入BiliBili视频方法B站视频外链 – 贝贝の站 (xbeibeix.com)](https://xbeibeix.com/bilibili3/)
-
-* [魔卡少女樱 CLEAR CARD篇：第1话_番剧_bilibili_哔哩哔哩](https://www.bilibili.com/bangumi/play/ep172119)
