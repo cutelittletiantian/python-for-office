@@ -129,7 +129,7 @@ MIME协议中，邮件是一个或者多个“板块”（或者说**“报文�
 |  **SMTP协议原设有字段**   |                           见1.1.2                            | 见文档1.1.2部分“SMTP协议邮件内容组成”邮件头部（header）<br />原有的字段在MIME协议邮件头部依然适用<br />且**From，To，Subject**属性仍非常重要 |
 |       MIME-Version        |                         MIME协议版本                         | 常见版本1.0，**无需设置**，按默认来即可。                    |
 |      **Content-Id**       |                        MIME邮件标识符                        | 如果采用**multipart类型容器**：<br />仅从邮件中**标识一个子报文**。<br /><br />如果邮件是non-multipart（非容器）：<br />标识一个完整的邮件。<br /><br />常用情景：<br />将本地资源嵌入邮件，需要使用multipart容器，<br />并构造子报文和对应子报文的Content-Id，<br />这个Content-Id将用于给html文本子报文调用显示。<br /><br />**较常用**字段之一（尤其是添加**内嵌资源**的时候）。 |
-|     **Content-Type**      | 邮件传输数据<br />是什么样的文件类型<br />（或者说：**MIME类型**） | 指定传输来的**数据解析成什么类型的文件**。（eg：文本文件？还是ppt文件之类的？）<br />可选参数：charset，说明邮件主体内容**以什么编码呈现**（防止乱码）<br />（通常建议取**utf-8**）<br />**最常用**字段之一。<br /><br />Content-Type有很多类型，这种情况下要能查表指定。<br />Content-Type查询表：[MIME 参考手册 (w3school.com.cn)](https://www.w3school.com.cn/media/media_mimeref.asp)<br />具体的做法，可以结合第2部分2.5.2节，学习查询中的**“渔”**<br /><br />如果邮件采用**multipart类型容器**：<br />仅说明邮件中**一个子报文**传输数据的类型。<br />如果邮件是non-multipart（非容器）：<br />说明的就是一个完整邮件所传输数据的类型。<br /><br />格式：``Content-Type: 父类型/子类型[; charset=内容呈现的编码字符集（非必选）]``<br />格式举例：``Content-Type: text/html; charset=utf-8``（注意冒号、分号后都有一空格） |
+|     **Content-Type**      | 邮件传输数据<br />是什么样的文件类型<br />（或者说：**MIME类型**） | 指定传输来的**数据解析成什么类型的文件**。（eg：文本文件？还是ppt文件之类的？）<br />可选参数：charset，说明邮件主体内容**以什么编码呈现**（防止乱码）<br />（通常建议取**utf-8**）<br />**最常用**字段之一。<br /><br />Content-Type有很多类型，这种情况下要能查表指定。<br />Content-Type查询表：<br />参考1：[MIME 参考手册 (w3school.com.cn)](https://www.w3school.com.cn/media/media_mimeref.asp)<br />参考2：[HTTP content-type \|菜鸟教程 (runoob.com)](https://www.runoob.com/http/http-content-type.html)<br />具体的做法，可以结合第2部分2.5.2节，学习查询中的**“渔”**<br /><br />如果邮件采用**multipart类型容器**：<br />仅说明邮件中**一个子报文**传输数据的类型。<br />如果邮件是non-multipart（非容器）：<br />说明的就是一个完整邮件所传输数据的类型。<br /><br />格式：``Content-Type: 父类型/子类型[; charset=内容呈现的编码字符集（非必选）]``<br />格式举例：``Content-Type: text/html; charset=utf-8``（注意冒号、分号后都有一空格） |
 | Content-Transfer-Encoding |                         内容传送编码                         | 描述在**传送过程中**邮件的主体是如何进行编码的。<br />（默认值为**base64**，通常取默认值就好了，传送过程的编码我们无需操心，放心交给协议去做就好） |
 |    Content-Description    |                           内容描述                           | 可读字符串，辅助描述邮件内容。<br />可自定义、**非必选**。   |
 
@@ -228,13 +228,10 @@ MIME协议没有取代或者更改SMTP协议，只是在SMTP协议的基础上�
 > 这个板块的内容，建议你看完后面的例子以后再回来回顾一下梗概过程，这个就是我们第3部分代码演示的整体流程。
 
 1. 登录邮件服务器，需要指定以下内容
-
-* 邮件服务器的域名（例如：QQ邮件系统服务器smtp.qq.com，网易邮件系统服务器：smtp.163.com等）
-* 邮件服务端口号
-* 登录用户名：发送方的邮箱
-* 登录授权码：这里的授权码可能并不是登录邮箱的密码，而是通过邮箱服务器规定的方式获取的授权码，需要结合相应邮件系统的文档操作（例如接下来的例子中，qq邮箱就需要结合官方文档的引导来获取授权码）
-
-
+   * 邮件服务器的域名（例如：QQ邮件系统服务器smtp.qq.com，网易邮件系统服务器：smtp.163.com等）
+   * 邮件服务端口号
+   * 登录用户名：发送方的邮箱
+   * 登录授权码：**这里的授权码可能并不是登录邮箱的密码，而是通过邮箱服务器规定的方式获取的授权码**，需要结合相应邮件系统的文档操作（例如接下来的例子中，qq邮箱就需要结合官方文档的引导来获取授权码，详见3.2节）
 
 2. 准备邮件的内容报文：结合MIME协议准备数据、拼装MIME报文
 
@@ -251,17 +248,15 @@ MIME协议没有取代或者更改SMTP协议，只是在SMTP协议的基础上�
 
 > 准备这些报文的详细过程，请阅读2.2—2.5。可以不用一次性全读，会很晕；可以在看了第3部分的实现案例以后，再回过头来看下面的内容。
 
+3. 设置multipart容器报文的**头部**，指定邮件的发送方（From）、接收方（To）以及邮件主题（Subject）
 
-
-3. 设置multipart容器报文的头部，指定邮件的发送方（From）、接收方（To）以及邮件主题（Subject）
-
-
-
-4. 将添加好了各种子报文的**multipart容器报文作为整体发送**，发送前给出收发方邮箱的参数。
+4. 将添加好了各种子报文的**multipart容器报文作为整体发送**，发送前给出收发方邮箱的参数，发送完毕随后可断开连接。
 
 
 
-> Python语言实现时需要导入的库
+**基于上述步骤，以下是Python语言实现时主要需要导入的库和实现的梗概过程**
+
+> 不要嫌弃下面的内容比较长，代码就几行，其它都是注释......😂
 
 ```python
 # SMTP协议封装库，负责登录和发送
@@ -274,12 +269,72 @@ from email.mime.xxxx import MIMExxxx
 # from email.mime.base import MIMEBase  # 所有MIME报文类的基类，用于实现多态，显然这个不是我们要用的
 # from email.mime.multipart import MIMEMultipart
 # from email.mime.nonmultipart import MIMENonMultipart
-# from email.mime.message import MIMEMessage
+# from email.mime.message import MIMEMessage  # 这个也非常少用
 # from email.mime.text import MIMEText
 # from email.mime.image import MIMEImage
 # from email.mime.application import MIMEApplication
 # from email.mime.audio import MIMEAudio
 # 其它不直接支持的主类，依然可以通过MIMEApplication设置主类从而继续支持
+
+
+# 1. 与SMTP邮件服务器建立连接、登录邮件服务器
+
+# 建立连接
+# 例如：QQ邮箱的SMTP邮件服务器，host="smtp.qq.com", port=465
+smtpObj = smtplib.SMTP_SSL(host="填入SMTP邮件服务器的名称", port=填写端口号，一个整数)
+
+# 执行登录
+# 注意：password可能并不是真正的密码，可能是你的邮箱系统中生成的授权码，这个需要由你自主获取并复制过来。
+# 在3.2节中，提供了QQ邮箱中获得授权码的方法。
+smtpObj.login(
+    user="填入自己的邮箱",
+    password="填入获取的授权码"
+)
+
+
+# 2. 准备邮件内容（MIME报文的拼装）
+# 构造MIME报文容器。
+multiMsg = MIMEMultipart()
+# 随后读入其它数据一个个往报文容器里添加
+# ——这个过程在本节略去，从2.2~2.5节详细说明了这个阶段的各种报文的准备方法，请根据需要选择性查看并动手实验
+# ......
+# 总之，邮件内容的MIME报文拼装完成后，存在了multiMsg当中
+
+
+# 3. 给MIME报文容器multiMsg的邮件头部添加发送方（From）、接收方（To）以及邮件主题（Subject）字段
+# 注意：发件人和收件人头部的格式
+#
+# 名称<邮箱>
+# ——举例：小添添<emailname@hostname.com>
+#
+# 邮箱两端应使用一对尖括号“<>”括起来。
+multiMsg["Subject"] = Header(s="这里自定义填写主题名称", charset="utf-8")
+multiMsg["From"] = Header(s="发件人名称(可自定义为姓名或者昵称)<发件人的邮箱>", charset="utf-8")
+multiMsg["To"] = Header(s="收件人名称(可自定义为姓名或者昵称)<收件人的邮箱>", charset="utf-8")
+
+# 以下方式的设置与上述等价，可按照个人习惯选择一种方式进行设置
+# multiMsg.add_header(_name="Subject", _value="这里自定义填写主题名称", charset="utf-8")
+# multiMsg.add_header(_name="From", _value="发件人名称(可自定义为姓名或者昵称)<发件人的邮箱>", charset="utf-8")
+# multiMsg.add_header(_name="To", _value="收件人名称(可自定义为姓名或者昵称)<收件人的邮箱>", charset="utf-8")
+
+
+# 4. 发出邮件，主要形参：
+# from_addr: 发件人的邮箱(两端不带尖括号)
+# to_addrs: 收件人的邮箱(两端不带尖括号)
+# msg: 第2步中拼装完成的MIME报文multiMsg
+# 
+# 注意——msg发出的内容，要把MIME报文做转换，转换有2种形式：
+# as_string()和as_bytes()
+# 两种方式转化报文的形式不尽相同，但皆可行，您可以试着输出观察二者的区别:
+# print(multiMsg.as_string())
+# print(multiMsg.as_bytes())
+smtpObj.sendmail(
+    from_addr="填入发件人的邮箱",
+    to_addrs="填入收件人的邮箱",
+    msg=multiMsg.as_string()
+)
+# 发送完毕，即可退出与SMTP服务器之间的连接
+smtpObj.quit()
 ```
 
 ***
@@ -381,12 +436,14 @@ from email.mime.text import MIMEText
 multiMsg = MIMEMultipart()
 
 # 1. 准备文本数据
-txtData = "就在这里吧，输入进来你想要的文本内容，随便输入，哈哈哈......"
+txtData = "就在这里吧，输入进来你想要的文本内容，随便输入，哈哈哈......也可以从文本文件中以文本方式读入数据"
+
 # 2. 创建文本子报文
 # _text: 添加准备好的数据
 # _subtype: 指定MIME类型子类为plain。父类已经为text了，这是由MIMEText默认设置好的
 # _charset: 指定文本以什么编码字符集显示，通常设为utf-8，否则可能乱码
 txtMsg = MIMEText(_text=txtData, _subtype="plain", _charset="utf-8")
+
 # 3. 文本子报文加入容器报文
 multiMsg.attach(payload=txtMsg)
 ```
@@ -394,6 +451,8 @@ multiMsg.attach(payload=txtMsg)
 ***
 
 #### 2.3.2 html文本数据报文
+
+**Note: HTML文本的语法不是本文档讨论的重点，因此接下来提到HTML文档，都是直接给出的，如有不解可自行查找相关资料，了解即可。**
 
 大致分如下步骤准备。
 
@@ -409,7 +468,9 @@ multiMsg.attach(payload=txtMsg)
 
 3. 将子报文添加到multipart容器报文中
 
-> html文本数据报文，往往是用于引用一些外部资源，参考2.4部分
+> html文本数据报文，往往是用于引用一些外部资源，或者设置样式让邮件形式更丰富。
+>
+> 参考2.4节通过html文本数据报文，结合外部资源嵌入显示更丰富的邮件内容。
 
 
 
@@ -422,7 +483,7 @@ from email.mime.text import MIMEText
 # 准备MIME容器报文
 multiMsg = MIMEMultipart()
 
-# 1. 准备文本数据
+# 1. 准备文本数据（下面只是很简单地复制过来了一段html模板文本）
 htmlData = """<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -433,7 +494,7 @@ htmlData = """<!DOCTYPE html>
     <p>test</p>
 </body>
 </html>"""
-# 也可以选择编辑好html文件了以后，再把相应的数据读进来
+# 也可以选择编辑好html文件了以后，再把相应的html文件数据读进来
 # htmlData = open(file="resources/text/htmlDemo.html", mode="r", encoding="utf-8").read()
 
 # 2. 创建文本子报文
@@ -441,6 +502,7 @@ htmlData = """<!DOCTYPE html>
 # _subtype: 指定MIME类型子类为html。父类已经为text了，这是由MIMEText默认设置好的
 # _charset: 指定文本以什么编码字符集解析，通常设为utf-8，否则可能乱码
 txtMsg = MIMEText(_text=htmlData, _subtype="html", _charset="utf-8")
+
 # 3. 文本子报文加入容器报文
 multiMsg.attach(payload=txtMsg)
 ```
@@ -478,7 +540,7 @@ multiMsg.attach(payload=txtMsg)
 * 资源链接来自互联网的搜索结果时，这个链接的内容要能够支持外链引用
 * 本地资源可以上传至一个云平台的文件服务器，且这个文件服务器能够生成用于外链引用的资源链接
   例如：
-  * OneDrive云（微软），啥外链都适合生成
+  * OneDrive云（微软），绝大多数外链都适合生成
   * 适合用于图片外链生成的“图床”：[Image Upload - SM.MS - Simple Free Image Hosting](https://sm.ms/)
 
 **引用外链时，要适当考虑外链服务器的稳定性，否则外部资源可能会时而能显示，时而又不能显示。**
@@ -487,18 +549,28 @@ multiMsg.attach(payload=txtMsg)
 
 **以下是一种Python实现方式（可结合第3部分程序演示案例加深印象）**
 
-这里引用的外部资源，是武汉理工大学南湖图书馆的照片，如下图所示。
+这里引用的外部资源，是武汉理工大学南湖图书馆的照片（来源：https://bl3302files.storage.live.com/y4mTM2sZADmrTf1IXMUhdAOShJoHNduCqoGVp1Sek2DY2M9DoOlXQuucmFATpcjjfuDgyEgMK1dqmwflD6c9Cip7BSHHvL3THe5ZTTQjhi8bPjpQDPKe-xeO9vbhqrzzQ1erS_pvopTF5ZJnGnRLijaDjJiRsXZYcuYZswbTQJAHyzTTGHkecplIm5P9Bx2zV-f?width=660&height=440&cropmode=none），如下图所示。
 
-<img src="https://bl3302files.storage.live.com/y4mTM2sZADmrTf1IXMUhdAOShJoHNduCqoGVp1Sek2DY2M9DoOlXQuucmFATpcjjfuDgyEgMK1dqmwflD6c9Cip7BSHHvL3THe5ZTTQjhi8bPjpQDPKe-xeO9vbhqrzzQ1erS_pvopTF5ZJnGnRLijaDjJiRsXZYcuYZswbTQJAHyzTTGHkecplIm5P9Bx2zV-f?width=660&height=440&cropmode=none " width="660" height="440" />
+<img src="https://bl3302files.storage.live.com/y4mV_yck_wisbER9GaLbC6mCr5-qfJQ8RNyq-4d4g8rk_tksQb8dmm8I6R2TS8ONpJr6Me4FYXSqxJXMznkL8ZNEsX6I4uiz9HojUcxYVP3-8kaYgjIbZuSFm-GiOdR5xm8v1uW9-MgiA1Ezlp-vxt25afV_DCNbJKj3Ej8UfzX4SGf1Q4uF7AnFkDhJ6sb64nx?width=660&height=440&cropmode=none" width="660" height="440" />
+
+> 注意：嵌入的资源，如果是外链，这个外链必须是该资源文件服务器的**共享权限**外链，且邮件中的外链嵌入资源**通常是图片**外链，其它类型文件外链可能不支持。（亲测）
 
 ```python
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
+# 准备MIME容器报文
+multiMsg = MIMEMultipart()
+
 # 1. 准备图片外链
-externalLink = "https://bl3302files.storage.live.com/y4mTM2sZADmrTf1IXMUhdAOShJoHNduCqoGVp1Sek2DY2M9DoOlXQuucmFATpcjjfuDgyEgMK1dqmwflD6c9Cip7BSHHvL3THe5ZTTQjhi8bPjpQDPKe-xeO9vbhqrzzQ1erS_pvopTF5ZJnGnRLijaDjJiRsXZYcuYZswbTQJAHyzTTGHkecplIm5P9Bx2zV-f?width=660&height=440&cropmode=none "
-# 2. 准备html文本，加入外链
-htmlText = f"""<p><img src={externalLink} width="660" height="440" /></p> """
+externalLink = "https://bl3302files.storage.live.com/y4mTM2sZADmrTf1IXMUhdAOShJoHNduCqoGVp1Sek2DY2M9DoOlXQuucmFATpcjjfuDgyEgMK1dqmwflD6c9Cip7BSHHvL3THe5ZTTQjhi8bPjpQDPKe-xeO9vbhqrzzQ1erS_pvopTF5ZJnGnRLijaDjJiRsXZYcuYZswbTQJAHyzTTGHkecplIm5P9Bx2zV-f?width=660&height=440&cropmode=none"
+
+# 2. 准备html文本，加入外链（可以提前编辑好html文本再把需要的标签复制过来）
+htmlText = \
+    f'''
+    <div>
+        <img src={externalLink} width="660" height="440" />
+    </div>'''
 # print(htmlData)
 
 # 3. 创建html文本子报文
@@ -506,11 +578,10 @@ htmlText = f"""<p><img src={externalLink} width="660" height="440" /></p> """
 # _subtype: 指定MIME类型子类为html。父类已经为text了，这是由MIMEText默认设置好的
 # _charset: 指定文本以什么编码字符集显示，通常设为utf-8，否则可能乱码
 txtMsg = MIMEText(_text=htmlText, _subtype="html", _charset="utf-8")
+
 # 4. 文本子报文加入容器报文
 multiMsg.attach(payload=txtMsg)
 ```
-
-> 
 
 ***
 
@@ -519,29 +590,73 @@ multiMsg.attach(payload=txtMsg)
 大致分如下步骤准备。
 
 1. 将本地资源文件以<u>二进制</u>方式**打开并读入**
-2. 创建MIME子报文，进行如下配置：
+2. 创建内嵌资源的MIME子报文，进行如下配置：
    * 子报文头（两件事情）
      * 根据**文件的类型（后缀名）**查表，指定其**对应的Content-Type**的主类和子类，由于是二进制文件，不用设置编码字符集
-       * 这里所说的“表”，是指文件后缀名与Content-Type映射表，这里给出一个参考表链接：[MIME 参考手册 (w3school.com.cn)](https://www.w3school.com.cn/media/media_mimeref.asp)，详细说明见2.5.2部分
-     * 头部添加**Content-Id**值，指定一个**cid链接**（形如），这个链接后续会用在html文本中进行引用
+       * 这里所说的“查表”，是指查文件后缀名与MIME类型（Content-Type）映射表，这里给出两个参考表链接：[MIME 参考手册 (w3school.com.cn)](https://www.w3school.com.cn/media/media_mimeref.asp)，[HTTP content-type | 菜鸟教程 (runoob.com)](https://www.runoob.com/http/http-content-type.html)
+         查表不难，会查字典也就会用表查Content-Type，详细说明见2.5.2部分
+     * 头部添加**Content-Id**值，指定一个**cid链接**（形如：\<resource\>这种格式的，两边用尖括号框起来），这个链接后续会用在html文本中进行引用
    * 子报文体：加入第1步读进来的二进制数据
-
-3. 按照2.3.2节的步骤，创建html文本报文，在适当的位置用cid链接进行嵌入
-4. 将子报文添加到multipart容器报文中
+3. 将创建好的内嵌资源子报文添加到容器报文中
+4. 按照2.3.2节的步骤，创建html文本报文，在适当的位置用cid链接进行嵌入
+5. 将创建好的html子报文添加到multipart容器报文中
 
 > 特别说明
 
-**使用此方式会让邮件变得很臃肿庞大，且容易使得邮件服务系统被视为垃圾邮件（除非寻找商业化方案）。**
+**使用此方式会让邮件变得很庞大（如果内嵌资源数据过于庞大，发送出去要花很长时间），但可以嵌入的资源更丰富**。所以，使用此法嵌入资源的时候，要注意控制文件大小。
 
 
 
 **以下是一种Python实现方式（可结合第3部分程序演示案例加深印象）**
 
+这里引用的资源文件，是一段把水倒入杯子中的视频（来源：[Pouring Water in Drinking Glass · Free Stock Video (pexels.com)](https://www.pexels.com/video/pouring-water-in-drinking-glass-853752/) ，非商用素材，使用前视频已下载到本地，并在本地读取嵌入）
+
+> 注意：嵌入的资源，如果来自本地，相比外链可嵌入的内容会更加丰富（亲测）。例如下面的这个例子中，我们在邮件正文内嵌入了视频。
+
 ```python
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.application import MIMEApplication
 
+# 准备MIME容器报文
+multiMsg = MIMEMultipart()
+
+# 1. 本地资源数据文件二进制方式读入
+# 项目文件中，这个开源文件的相对目录是"resources/video/Pouring Water in Drinking Glass.mp4"，请根据资源所在具体位置进行调整
+resourceData = open(file="resources/video/Pouring Water in Drinking Glass.mp4", mode="rb").read()
+# 2. 创建内嵌资源的MIME子报文
+resourceMsg = MIMEApplication(_data=resourceData)
+# 查表，找到.mp4类型的文件的“主类/子类”为"video/mpeg4"。设置Content-Type
+resourceMsg.replace_header(_name="Content-Type", _value="video/mpeg4")
+# 增加Content-Id字段，创建cid，这里的cid就是<water>了
+cid = "water"
+resourceMsg.add_header(_name="Content-Id", _value=f"<{cid}>")
+
+# 3. 内嵌资源报文添加进容器
+multiMsg.attach(payload=resourceMsg)
+
+# 4. 准备html文本，加入cid（可提前编辑好html文本再复制粘贴过来）
+htmlText = \
+    f'''
+    <div>
+        <video src="cid:{cid}"
+               alt="video: Pouring Water in Drinking Glass.mp4"
+               loop="loop" width="30%" autoplay="autoplay">
+               视频：Pouring Water in Drinking Glass
+        </video>
+    </div>
+    '''
+# print(htmlData)
+
+# 创建html文本子报文
+# _text: 添加准备好的数据
+# _subtype: 指定MIME类型子类为html。父类已经为text了，这是由MIMEText默认设置好的
+# _charset: 指定文本以什么编码字符集显示，通常设为utf-8，否则可能乱码
+txtMsg = MIMEText(_text=htmlText, _subtype="html", _charset="utf-8")
+
+# 5. html文本子报文加入容器报文
+multiMsg.attach(payload=txtMsg)
 ```
-
-
 
 ***
 
@@ -566,10 +681,11 @@ email.mime模块所定义的常见Content-Type主类的专用MIME报文类有如
 
 > MIMEApplication类特别说明
 
-对于其它的Content-Type文件（如视频主类video），**email.mime模块没有专门的MIME报文类**（比如没有email.mime.video.MIMEVideo类）的，可以**统一使用email.mime.application.MIMEApplication创建报文，并设置其构造函数中的_maintype参数**，例如针对某视频文件（主类为video），可以这样构造它的MIME子报文。
+对于其它的Content-Type文件（如视频主类video），**email.mime模块没有专门的MIME报文类**（比如没有email.mime.video.MIMEVideo类）的，可以**统一使用email.mime.application.MIMEApplication创建报文，并修改Content-Type字段为"video/xxx"**（xxx是什么可以去查表），例如针对某视频文件（主类为video），可以这样构造它的MIME子报文。
 
 ```python
-
+resourceMsg = MIMEApplication(_data=resourceData)
+resourceMsg.replace_header(_name="Content-Type", _value="video/mpeg4")
 ```
 
 > Note：若Application主类报文没有指定_maintype参数，则它的默认值也为application，这点与其它的MIME报文对象是一致的。
@@ -593,9 +709,8 @@ email.mime模块所定义的常见Content-Type主类的专用MIME报文类有如
 1. 将本地资源文件以<u>二进制</u>方式**打开并读入**
 2. 创建MIME子报文，进行如下配置：
    * 子报文头部（2件事情）
-     * 根据**文件的类型（后缀名）**查表，指定其**对应的Content-Type**的主类和子类，由于是二进制文件，不用设置编码字符集
-     * 头部设置**Content-Id**字段值，指定一个**cid链接**（形如），这个链接后续会用在html文本中进行引用
-     * 头部设置MIME扩展协议的**Content-Disposition**，设置显示模式为附件**attachment**，同时设置显示文件名**filename**（否则接收用户看到浏览器显示的文件名是乱码）。
+     * 根据**文件的类型（后缀名）**查表，指定其**对应的Content-Type**的主类和子类，由于是二进制文件数据，不用设置编码字符集
+     * 头部设置MIME扩展协议的字段**Content-Disposition**，设置显示模式为附件**attachment**，同时设置显示文件名**filename**（否则接收用户看到浏览器显示的文件名是乱码）。
    * 子报文主体：加入第1步读进来的二进制数据
 3. 将创建好的子报文添加到multipart容器报文中
 
@@ -603,21 +718,66 @@ email.mime模块所定义的常见Content-Type主类的专用MIME报文类有如
 
 **以下是一种Python实现方式（可结合第3部分程序演示案例加深印象）**
 
-```python
+这里读取的附件文件有一个word文件和一个ppt文件，均在本地。
 
+```python
+from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+
+# 准备MIME容器报文
+multiMsg = MIMEMultipart()
+
+# 1. 二进制方式读入word附件
+attachData = open(file="resources/attach/演示word附件1.docx", mode="rb").read()
+
+# 2. 创建MIME子报文
+# _data: 添加读入的二进制数据
+# _subtype: 查表，设置好word文档的子类型
+attachMsg = MIMEApplication(_data=attachData, _subtype="msword")
+# 添加扩展字段Content-Disposition：设置显示方式和浏览器默认呈现的附件名称
+attachMsg.add_header(_name="Content-Disposition", _value="attachment", filename="演示word附件1.docx")
+
+# 3. 将创建好的报文添加到multipart容器报文中
+multiMsg.attach(payload=attachMsg)
+
+# 类似的过程添加ppt附件
+attachData = open(file="resources/attach/演示ppt附件2.pptx", mode="rb").read()
+attachMsg = MIMEApplication(_data=attachData, _subtype="vnd.ms-powerpoint")
+attachMsg.add_header(_name="Content-Disposition", _value="attachment", filename="演示ppt附件2.pptx")
+multiMsg.attach(payload=attachMsg)
 ```
 
 ***
 
 #### 2.5.2 补充说明：遇到陌生后缀名文件的Content-Type，怎么查表
 
-提供文件**后缀名-MIME类型对照表**：[MIME 参考手册 (w3school.com.cn)](https://www.w3school.com.cn/media/media_mimeref.asp)
+提供2种文件**后缀名-MIME类型对照表**，可按需选择性查看：
 
-对照表中，列举除了2种
+* [MIME 参考手册 (w3school.com.cn)](https://www.w3school.com.cn/media/media_mimeref.asp)
+* [HTTP content-type | 菜鸟教程 (runoob.com)](https://www.runoob.com/http/http-content-type.html)
+
+对照表中，列举出了“文件后缀名”与“MIME类型（Content-Type）”的对应关系，表的结构大致均为如下：
+
+| 文件后缀名 | MIME类型（Content-Type） |
+| :--------: | :----------------------: |
+|    .txt    |        text/plain        |
+|   ......   |          ......          |
+
+若想要知道某一种文件后缀名对应的MIME类型是什么，结合表对照即可。例如，2.5.1中使用到了word文档的附件（.docx或.doc）以及ppt文档的附件（.pptx或.ppt），遇到陌生的后缀名不知道Content-Type的情况下，查表得到：
+
+| 文件后缀名 |     MIME类型（Content-Type）      |
+| :--------: | :-------------------------------: |
+|    .txt    |            text/plain             |
+|   ......   |              ......               |
+|  **.doc**  |      application/**msword**       |
+|   ......   |              ......               |
+|  **.ppt**  | application/**vnd.ms-powerpoint** |
+
+这时，才得出，二者的Content-Type分别为application/**msword**和application/**vnd.ms-powerpoint**，于是上述2.5.1的演示代码中，创建**MIMEApplication**报文对象，分别指定两种附件的Content-Type的**_subtype**取值为**msword和vnd.ms-powerpoint**。
 
 > 遇到不知道该解析成什么Content-Type的文件后缀名时该怎么办
 
-假如遇到了查表没有找到对应Content-Type的文件后缀，可以使用通用的MIME类型**application/octet-stream**，万物皆可application/octet-stream（二进制流）。
+假如遇到了查表没有找到对应Content-Type的文件后缀（比如可以试试从上述两个文档中查.dat的文件后缀对应MIME类型，貌似是找不到的），这时可以使用通用的二进制流 MIME类型**application/octet-stream**，万物皆可application/octet-stream（二进制流）。
 
 ```python
 from email.mime.multipart import MIMEMultipart
@@ -663,13 +823,13 @@ multiMsg.attach(payload=unknownMsg)
 
 1. 需要支持的邮件内容包含：
    * 希望支持的文本类型：普通文本和html文本
-   * 希望支持的内嵌资源文件类型：图片和视频
+   * 希望支持的内嵌资源文件类型：图片、视频
    * 希望支持的附件文件类型：各种各样后缀的文件都能发出
 2. 批量发送说明：
    * 邮件整体有模板，只需要根据组员信息在模板文件中填空即可
    * 将组员信息整合到Excel表格（后缀名.xlsx）
    * Excel表格包含表头
-   * Excel表头必留字段：组员的姓名、昵称和邮箱；除此之外表头往后延伸其它字段时，程序可自动读取，而无需修改程序本身
+   * Excel表头必留字段：组员的姓名（不是真名也可以）、昵称和邮箱；除此之外表头往后延伸其它字段时，程序可自动读取，而无需修改程序本身
 
 ***
 
@@ -679,7 +839,7 @@ multiMsg.attach(payload=unknownMsg)
 
 ***
 
-#### 
+#### 3.2.1 
 
 ***
 
@@ -740,10 +900,12 @@ multiMsg.attach(payload=unknownMsg)
 * 谢希仁编著《计算机网络（第7版）》—第6章 应用层—6.5 电子邮件
 * [邮件传输协议SMTP和SMTPS - 楼兰胡杨 - 博客园 (cnblogs.com)](https://www.cnblogs.com/east7/p/13406089.html)
 * [MIME 参考手册 (w3school.com.cn)](https://www.w3school.com.cn/media/media_mimeref.asp)
+* [HTTP content-type | 菜鸟教程 (runoob.com)](https://www.runoob.com/http/http-content-type.html)
 * [header中Content-Disposition的作用与使用方法 - wq9 - 博客园 (cnblogs.com)](https://www.cnblogs.com/wq-9/articles/12165056.html)
 * [Content-Disposition - HTTP | MDN (mozilla.org)](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Headers/Content-Disposition)
 * [王道考研 计算机网络 P72 6.4 电子邮件_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili](https://www.bilibili.com/video/BV19E411D78Q?p=72)
 * [MIME中的Multipart/mixed - 蹉跎错，消磨过，最是光阴化浮沫 - ITeye博客](https://www.iteye.com/blog/gaojunwei-1939073)
-
 * [Free stock videos · Pexels Videos](https://www.pexels.com/videos/)
+* [python自动发邮件(嵌入图片，带附件，html内容)-注释详细_清风徐来-CSDN博客](https://blog.csdn.net/weixin_42223090/article/details/105630310)
+* [python3之模块SMTP协议客户端与email邮件MIME对象 - Py.qi - 博客园 (cnblogs.com)](https://www.cnblogs.com/zhangxinqi/p/9113859.html)
 
