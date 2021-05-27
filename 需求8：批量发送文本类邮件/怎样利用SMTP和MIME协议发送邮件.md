@@ -837,7 +837,7 @@ multiMsg.attach(payload=unknownMsg)
    * 邮件整体有模板，只需要根据组员信息在模板文件中填空即可
    * 将组员信息整合到Excel表格（后缀名.xlsx）
    * Excel表格包含表头
-   * Excel表头必留字段：组员的姓名（不是真名也可以）、昵称和邮箱；除此之外表头往后延伸其它字段时，程序可自动读取，而无需修改程序本身
+   * Excel表头必留字段：组员的ID、姓名、邮箱；除此之外表头往后延伸其它字段——例如延伸出昵称、部门、性别、~~男/女朋友~~（bushi...——时，程序可自动读取追加的字段，而无需修改程序本身。ID是唯一字段，不能重复，可能是工号、学号或者默认的自增编号（从1开始）。
 
 ***
 
@@ -847,7 +847,65 @@ multiMsg.attach(payload=unknownMsg)
 
 ***
 
-#### 3.2.1 
+#### 3.2.1 找到QQ邮箱的SMTP服务器和服务端口号的方法
+
+1. 进入QQ邮箱，点击**“设置”**，选择**“账户”**选项卡。
+
+<img src="https://bl3302files.storage.live.com/y4m9368N37L6JA12R_DuauTrJqfaX2DT54QoPeh1zDcipeVXkVvXszXB2ksSolu2l-dTbaNtzVjGhTNSl2M6hy9NPwfyWrUYf-CqgU0tSisxUk5GBs_hEdXDQdxvtw4Z_oyxmCJdlBbjnzP5kUirRAzI3wSK_HYos-MDXVWDoOn8rSRgbGW4UuJjTIjuHK3c9ZU?width=660&height=139&cropmode=none" width="660" height="139" />
+
+2. 下拉，找到各种服务这一栏选项，点击**“如何设置”**这个链接，进入帮助文档界面。
+
+<img src="https://bl3302files.storage.live.com/y4mYsZscWCYp_ymPQUX2GD3Gyueuy3de7pAI0L5xBYoFqtqVMcBWODjjFQxMrjqu32qsrJgrtEVZjSwxZqI6RO4v2Cw4E7-1uKahhgCw5YzK_KvTul03ClBheMVFMdQZuHgGdvsNvHbxB5G8rvefvbjujtEk3osTkQi1S1mF9x_RMk2OnXmMxnwBSpATowjb8_s?width=660&height=180&cropmode=none" width="660" height="180" />
+
+3. 点进去以后，第一眼就能找到服务器的域名和提供服务的端口号。本应用针对发送邮件，因此只用关注发送邮件服务器栏。
+
+<img src="https://bl3302files.storage.live.com/y4mysGmDUAJH3_fR5Cf828QfR45-pYPApRdRZVyVG-x74VWmqsJwPHH_szJ-17qFBl-efKzD7kZROt-FBuI3t9mU9Q1vhv2-MJ5JvMdwzEXwFadbNoj86nWrtdfZ1UdssB3b0Yx4SO9HZ_oV6ow2NEbLvUrikNqmpQDDMbDpKcsMf0rg5fm5m57xYECCE1XmldJ?width=660&height=199&cropmode=none" width="660" height="199" />
+
+于是找到了发送服务器的一些信息。
+
+* 服务器：smtp.qq.com
+* 端口号：465或587，这里我们选择465。
+* 发送服务器要求使用SSL安全协议建立连接，所以调用smtplib协议库的时候要找一找有没有相关支持（其实是有的）
+
+#### 3.2.2 登录用的授权码的获取过程
+
+1. 回到3.2.1节的第2步这个位置，点击**“生成授权码”**
+
+<img src="https://bl3302files.storage.live.com/y4mvjOq0ilPuJZIM7UinQrL_H-krSKaWG6f-f2iVcGuzOar4ScoiAos8GKKV__XG8vJB6H2nFnkVwglB-0XMtKM8CxXox_OdaUZDw6635OPW9hALs7PavNu1HDNPEtXiHxIWWPDpii4PgXq0Ib_BZVpMdxO-MH1pxUB--JtI-xD79QlzDxmcukv7SKeshzkEKYg?width=660&height=186&cropmode=none" width="660" height="186" />
+
+2. 这个时候QQ邮箱会提醒你需要输入**手机令牌**
+
+<img src="https://bl3302files.storage.live.com/y4mAaedzF8DZgjKaA6l9elrt3SpJShpbbhOXPJ_YMHCM8jekLYwUMzIhG2hyy70RY66GwMfcaMwqoUHdJ0Vzm18FASqFfxtXyFv3bJYO8AFKPONJx3wNG0Ykm7qKHrhoc2q8KxqRV9MmP77mX_7xVBb6rDzjwXrcISfSkq4-SAubp4gIJvc2tCczUFXhM_fEOYz?width=320&height=219&cropmode=none" width="320" height="219" />
+
+3. 这个令牌在哪里找：**下载QQ安全中心**，找到屏幕中显示的**流水码**。
+
+<img src="https://bl3302files.storage.live.com/y4majCgaB19YobQJF9VV5Dg6TwjeWN8Evh2eZ5wfQxIUCnbV6Hl5qprzBN9OFLMahPLxbxpTCgAKJzbNQkG2H8YAUqdxo1tRCdDJSRxBpqeUDrSeKbW9igo-Fo99PNHnnhQefvVPOCJrSrW5fFWVndZd7ubyeJxJ3_-9b4lW6wVPOB2fdXbKSBnDO6zUME4SWHu?width=323&height=660&cropmode=none" width="323" height="660" />
+
+4. 在流水码刷新的时间内，填入当前显示的流水码到手机令牌中。
+
+<img src="https://bl3302files.storage.live.com/y4m4SU37OswwC9-aG4ctXbEAn4PzxiQN9xd5ECCqZ_VZaNNyIxkgEgwi5cm9pwL0jtWNpfnEj6194ya7DH0slGp_6vkoIjDjF2hU4zeOFZ1iDui4gonuyf-nN_-dkdnfzc666IY0bY5pSeJgli3SGeI-b7m4SCQjNUo9DnIFEKySj_xWsgU-yhFer5KAsCe6Z1-?width=660&height=466&cropmode=none" width="660" height="466" />
+
+5. QQ邮箱继续验证，得到一个16位**授权码**。这个授权码将**代替QQ邮箱的真实密码**写在程序当中，用于登录SMTP邮件服务器。
+
+<img src="https://bl3302files.storage.live.com/y4mjKDem4dzXOkhMx-HqJoiFe8I9bWcvVRt1-NcMUZ4xEYA4H8wI-K8NvsZf-_GsqPV41GXETQa8Lm8EdpouL5JGTeKbP47IBVVjtFaZXb5yqE0Ygz36bvNN85P7fcJh3EbzxElADNOeUQ_Ufwq0FnRxCyWwfP3ADKBYCwfFlCkxqIK6WFeFMvfr6v48GjNgxSo?width=660&height=347&cropmode=none" width="660" height="347" />
+
+#### 3.2.3 为实现批量发送需要准备的Excel表结构
+
+| ID（必填） | 姓名（必填） | 邮箱（必填） | 其它字段（根据业务继续补充） |
+| :--------: | :----------: | :----------: | :--------------------------: |
+|            |              |              |            ......            |
+
+Excel表文件设置
+
+* 文件名：成员联系方式表.xlsx
+* 工作表名：联系方式
+  * 演示需要：扩展字段两个可选字段
+    * 部门
+    * 性别
+
+Excel演示数据表展示（隐去邮箱）
+
+
 
 ***
 
@@ -856,6 +914,16 @@ multiMsg.attach(payload=unknownMsg)
 ### 3.3 程序框架
 
 ***
+
+#### 3.3.1 邮件内容大致外观
+
+
+
+#### 3.3.2 MIME报文结构形式展示
+
+
+
+#### 3.3.3 批量处理
 
 
 
