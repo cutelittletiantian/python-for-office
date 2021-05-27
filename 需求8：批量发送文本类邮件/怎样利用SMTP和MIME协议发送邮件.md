@@ -549,7 +549,13 @@ multiMsg.attach(payload=txtMsg)
 
 **以下是一种Python实现方式（可结合第3部分程序演示案例加深印象）**
 
-这里引用的外部资源，是武汉理工大学南湖图书馆的照片（来源：https://bl3302files.storage.live.com/y4mTM2sZADmrTf1IXMUhdAOShJoHNduCqoGVp1Sek2DY2M9DoOlXQuucmFATpcjjfuDgyEgMK1dqmwflD6c9Cip7BSHHvL3THe5ZTTQjhi8bPjpQDPKe-xeO9vbhqrzzQ1erS_pvopTF5ZJnGnRLijaDjJiRsXZYcuYZswbTQJAHyzTTGHkecplIm5P9Bx2zV-f?width=660&height=440&cropmode=none），如下图所示。
+这里引用的外部资源，是武汉理工大学南湖图书馆的照片。
+
+来源：
+
+https://bl3302files.storage.live.com/y4mTM2sZADmrTf1IXMUhdAOShJoHNduCqoGVp1Sek2DY2M9DoOlXQuucmFATpcjjfuDgyEgMK1dqmwflD6c9Cip7BSHHvL3THe5ZTTQjhi8bPjpQDPKe-xeO9vbhqrzzQ1erS_pvopTF5ZJnGnRLijaDjJiRsXZYcuYZswbTQJAHyzTTGHkecplIm5P9Bx2zV-f?width=660&height=440&cropmode=none
+
+如下图所示。
 
 <img src="https://bl3302files.storage.live.com/y4mV_yck_wisbER9GaLbC6mCr5-qfJQ8RNyq-4d4g8rk_tksQb8dmm8I6R2TS8ONpJr6Me4FYXSqxJXMznkL8ZNEsX6I4uiz9HojUcxYVP3-8kaYgjIbZuSFm-GiOdR5xm8v1uW9-MgiA1Ezlp-vxt25afV_DCNbJKj3Ej8UfzX4SGf1Q4uF7AnFkDhJ6sb64nx?width=660&height=440&cropmode=none" width="660" height="440" />
 
@@ -774,6 +780,8 @@ multiMsg.attach(payload=attachMsg)
 |  **.ppt**  | application/**vnd.ms-powerpoint** |
 
 这时，才得出，二者的Content-Type分别为application/**msword**和application/**vnd.ms-powerpoint**，于是上述2.5.1的演示代码中，创建**MIMEApplication**报文对象，分别指定两种附件的Content-Type的**_subtype**取值为**msword和vnd.ms-powerpoint**。
+
+注意：您可能会发现.ppt文件的子类型有vnd.ms-powerpoint和x-ppt两种，**任选其一**即可。
 
 > 遇到不知道该解析成什么Content-Type的文件后缀名时该怎么办
 
